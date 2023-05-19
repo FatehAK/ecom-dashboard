@@ -1,0 +1,43 @@
+{
+  "name": "ecom-dashboard",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "cz": "czg"
+  },
+  "browserslist": [
+    "defaults and supports es6-module",
+    "maintained node versions"
+  ],
+  "dependencies": {
+    "next": "13.4.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.3",
+    "@types/node": "20.2.1",
+    "@types/react": "18.2.6",
+    "@types/react-dom": "18.2.4",
+    "autoprefixer": "10.4.14",
+    "concurrently": "^8.0.1",
+    "czg": "1.6.1",
+    "eslint": "8.40.0",
+    "eslint-config-next": "13.4.3",
+    "postcss": "8.4.23",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-nested": "^6.0.1",
+    "postcss-preset-env": "^8.0.1",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
+    "typescript": "5.0.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@8.5.1"
+}
