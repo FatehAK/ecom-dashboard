@@ -1,0 +1,43 @@
+.navbarActions {
+  display: flex;
+  gap: 1.2rem;
+  font-size: 0.62rem;
+}
+
+.btn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 0;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.addNewProductBtn {
+  composes: btn;
+  gap: 0.2rem;
+  padding-block: 0.5rem;
+  padding-inline: 0.9rem;
+  color: var(--white);
+  background-color: var(--color-brand);
+  border: 0;
+  border-radius: 2rem;
+}
+
+.importDataBtn,
+.exportCSVBtn {
+  composes: btn;
+  color: var(--color-text-body);
+  background: transparent;
+}
+
+.importDataBtn {
+  gap: 0.4rem;
+}
+
+.exportCSVBtn {
+  gap: 0.2rem;
+}

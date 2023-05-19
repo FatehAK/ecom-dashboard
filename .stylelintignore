@@ -1,6 +1,7 @@
 node_modules
 out
 build
+public
 .idea
 .vscode
 .next

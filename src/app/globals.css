@@ -1,3 +1,14 @@
-body {
-  height: 100%;
+:root {
+  /* color tokens */
+  --white: #fff;
+  --dark-grey: #444;
+  --royal-blue: #1d00e8;
+
+  /* contextual */
+  --color-brand: var(--royal-blue);
+  --color-text-body: var(--dark-grey);
+
+  scroll-behavior: smooth;
+  font-size: 100%;
+  color: var(--color-text-body);
 }

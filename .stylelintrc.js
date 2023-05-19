@@ -14,6 +14,8 @@ module.exports = {
     'plugin/declaration-block-no-ignored-properties': true,
     'custom-property-empty-line-before': 'never',
     'media-feature-range-notation': 'prefix',
+    'selector-class-pattern': null,
+    'color-function-notation': null,
     'comment-empty-line-before': [
       'always',
       {
