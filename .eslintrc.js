@@ -1,3 +1,46 @@
-{
-  "extends": "next/core-web-vitals"
-}
+module.exports = {
+  root: true,
+  env: {
+    es2022: true,
+    browser: true,
+    node: true,
+  },
+  parserOptions: {
+    ecmaFeatures: { jsx: true },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:@next/next/recommended',
+    'prettier',
+  ],
+  rules: {
+    'for-direction': 'off',
+    'no-empty': 'off',
+    'no-delete-var': 'off',
+    'no-useless-escape': 'off',
+    'no-sparse-arrays': 'off',
+    'no-prototype-builtins': 'off',
+    'react/prop-types': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-autofocus': 'off',
+    'react/display-name': 'off',
+    'no-console': 'off',
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'react/jsx-no-useless-fragment': 'off',
+    'react/function-component-definition': ['error', { namedComponents: 'arrow-function' }],
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx', 'tsx'] }],
+  },
+  plugins: ['only-warn', 'react'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+};
