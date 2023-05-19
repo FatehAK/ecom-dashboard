@@ -1,3 +1,4 @@
+import 'modern-normalize/modern-normalize.css';
 import './globals.css';
 import { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
