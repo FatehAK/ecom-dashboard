@@ -1,10 +1,7 @@
-'use client';
-
 import TableRow from './TableRow';
 import styles from './Table.module.css';
-import inventoryData from './data';
 
-const Table = () => {
+const Table = ({ data }) => {
   return (
     <div className={styles.tableContainer}>
       <table className={styles.inventoryTable}>
@@ -21,9 +18,9 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {inventoryData.map(data => {
-            return <TableRow key={data.id} data={data} />;
-          })}
+          {data.map(item => (
+            <TableRow key={item.id} data={item} />
+          ))}
         </tbody>
       </table>
     </div>

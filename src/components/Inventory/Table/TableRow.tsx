@@ -123,9 +123,7 @@ const TableRow = ({ data, depth = 0 }) => {
         <td className={styles.nowrap}>{data.leadTime}</td>
       </tr>
       {isExpanded &&
-        childRows.map(data => {
-          return <TableRow key={data.name} data={data} depth={depth + 1} />;
-        })}
+        childRows.map(data => <TableRow key={data.name} data={data} depth={depth + 1} />)}
     </>
   );
 };

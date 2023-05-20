@@ -24,7 +24,9 @@
       "components/*": ["./src/components/*"],
       "utils/*": ["./src/utils/*"],
       "constants/*": ["./src/constants/*"],
-      "assets/*": ["./src/assets/*"]
+      "assets/*": ["./src/assets/*"],
+      "redux/*": ["src/store/*"],
+      "api/*": ["src/api/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
