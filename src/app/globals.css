@@ -1,12 +1,15 @@
 :root {
   /* color tokens */
   --white: #fff;
-  --dark-grey: #444;
+  --grey-300: #444;
+  --grey-200: #d1d1d1;
+  --grey-100: #f5f5f5;
   --royal-blue: #1d00e8;
+  --light-blue: #f1f0ff;
 
   /* contextual */
   --color-brand: var(--royal-blue);
-  --color-text-body: var(--dark-grey);
+  --color-text-body: var(--grey-300);
 
   scroll-behavior: smooth;
   font-size: 100%;

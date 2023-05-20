@@ -1,0 +1,39 @@
+.bold {
+  font-weight: 600;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.productTitle {
+  composes: bold;
+  composes: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.variantCount {
+  composes: nowrap;
+  margin-inline-start: 0.5rem;
+  margin-inline-end: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--grey-200);
+}
+
+.colorCircleWrap {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.colorCircle {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+
+.chevronDown {
+  transition: transform 0.3s;
+}

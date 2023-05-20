@@ -1,5 +1,12 @@
+import InventoryTable from 'components/Inventory/Table/Table';
+
 const InventoryPage = () => {
-  return <main>Inventory Page</main>;
+  // TODO: fetch data here
+  return (
+    <main>
+      <InventoryTable />
+    </main>
+  );
 };
 
 export default InventoryPage;

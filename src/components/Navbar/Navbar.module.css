@@ -1,12 +1,12 @@
 .navbarContainer {
-  padding-block: 1rem;
+  padding-block-start: 1rem;
   padding-inline: 2rem;
 }
 
 .navbar {
   display: flex;
   align-items: center;
-  border-bottom: 2px solid rgb(245, 245, 245);
+  border-bottom: 2px solid var(--grey-100);
 }
 
 .navbar > ul {
