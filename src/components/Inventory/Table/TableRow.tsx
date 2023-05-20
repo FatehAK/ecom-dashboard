@@ -110,6 +110,7 @@ const TableRow = ({ data, depth = 0 }) => {
               <ChevronDownIcon width={12} height={12} />
             </span>
           )}
+          {isColorRow && data.active && <span className={styles.activeTag}>Active</span>}
         </td>
         <td>{data.inventory}</td>
         <td>${data.price}</td>

@@ -155,7 +155,7 @@ export default [
         price: 65.99,
         discountPercentage: 10,
         inventory: 30,
-        active: true,
+        active: false,
         secondary_variants: [
           {
             name: 'Small',
@@ -188,7 +188,7 @@ export default [
         price: 65.99,
         discountPercentage: 10,
         inventory: 30,
-        active: true,
+        active: false,
         secondary_variants: [
           {
             name: 'Medium',
@@ -287,7 +287,7 @@ export default [
         price: 65.99,
         discountPercentage: 10,
         inventory: 30,
-        active: true,
+        active: false,
         secondary_variants: [
           {
             name: 'Small',
@@ -359,7 +359,7 @@ export default [
         price: 65.99,
         discountPercentage: 10,
         inventory: 30,
-        active: true,
+        active: false,
         secondary_variants: [
           {
             name: 'Small',
@@ -401,7 +401,7 @@ export default [
         price: 65.99,
         discountPercentage: 10,
         inventory: 40,
-        active: true,
+        active: false,
         secondary_variants: [
           {
             name: 'Medium',
@@ -572,7 +572,7 @@ export default [
         price: 65.99,
         discountPercentage: 10,
         inventory: 30,
-        active: true,
+        active: false,
         secondary_variants: [
           {
             name: 'Small',
@@ -599,7 +599,7 @@ export default [
         price: 65.99,
         discountPercentage: 10,
         inventory: 40,
-        active: true,
+        active: false,
         secondary_variants: [
           {
             name: 'Medium',
@@ -680,7 +680,7 @@ export default [
         price: 65.99,
         discountPercentage: 10,
         inventory: 30,
-        active: true,
+        active: false,
         secondary_variants: [
           {
             name: 'Extra Large',

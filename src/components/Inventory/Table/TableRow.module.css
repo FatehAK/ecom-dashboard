@@ -37,3 +37,14 @@
 .chevronDown {
   transition: transform 0.3s;
 }
+
+.activeTag {
+  margin-inline-start: 1rem;
+  padding-block: 0.3rem;
+  padding-inline: 0.7rem;
+  font-size: 0.56rem;
+  font-weight: 400;
+  color: var(--white);
+  background-color: var(--lime-green);
+  border-radius: 2rem;
+}
