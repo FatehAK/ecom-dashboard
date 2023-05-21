@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import PencilIcon from 'components/Icons/Pencil';
 import styles from './TableBodyCell.module.css';
 
-const TableBodyCell = ({ className, children, ...restProps }) => {
+const TableBodyCell = ({ className, children, blockEdits, ...restProps }) => {
   const [isEditing, setEditing] = useState(false);
   const [showEditIcon, setShowEditIcon] = useState(false);
 
@@ -38,7 +38,7 @@ const TableBodyCell = ({ className, children, ...restProps }) => {
     <td className={className} {...restProps} {...listeners}>
       <div className={styles.tableCellContent}>
         {children(cellProps)}
-        {showEditIcon && (
+        {showEditIcon && !blockEdits && (
           <button type="button" className={styles.editBtn} onClick={handleEditClick}>
             <PencilIcon width={12} height={12} />
             <span>Edit</span>

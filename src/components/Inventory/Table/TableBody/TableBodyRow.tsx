@@ -7,7 +7,7 @@ import { COLOR_LIST, COLOR_MAP, SIZE_LIST, SIZES_MAP } from 'constants/index';
 import { MAX_COLORS_TO_DISPLAY, MAX_SIZES_TO_DISPLAY, NESTED_ROW_PADDING } from '../config';
 import styles from './TableBodyRow.module.css';
 
-const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
+const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0, blockEdits }) => {
   const dispatch = useDispatch();
   const [isExpanded, setExpanded] = useState(false);
 
@@ -152,6 +152,7 @@ const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
         <TableBodyCell
           className={styles.productTitle}
           style={{ paddingInlineStart: `${depth * NESTED_ROW_PADDING + 2}rem` }}
+          blockEdits={blockEdits}
         >
           {cellProps => (
             <>
@@ -169,7 +170,7 @@ const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
             </>
           )}
         </TableBodyCell>
-        <TableBodyCell>
+        <TableBodyCell blockEdits={blockEdits}>
           {cellProps => (
             <input
               name="inventory"
@@ -178,7 +179,7 @@ const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
             />
           )}
         </TableBodyCell>
-        <TableBodyCell>
+        <TableBodyCell blockEdits={blockEdits}>
           {cellProps => (
             <>
               <span>$</span>
@@ -190,7 +191,7 @@ const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
             </>
           )}
         </TableBodyCell>
-        <TableBodyCell className={styles.bold}>
+        <TableBodyCell className={styles.bold} blockEdits={blockEdits}>
           {cellProps => (
             <>
               <input
@@ -206,7 +207,7 @@ const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
           <div className={styles.colorCircleWrap}>{renderColorShapes()}</div>
         </TableBodyCell>
         <TableBodyCell className={styles.nowrap}>{renderSizesText()}</TableBodyCell>
-        <TableBodyCell className={styles.nowrap}>
+        <TableBodyCell className={styles.nowrap} blockEdits={blockEdits}>
           {cellProps => (
             <input
               name="leadTime"
@@ -224,6 +225,7 @@ const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
             rowId={`${rowId}_${data.name}`}
             rowSiblings={childRows}
             depth={depth + 1}
+            blockEdits={blockEdits}
           />
         ))}
     </>

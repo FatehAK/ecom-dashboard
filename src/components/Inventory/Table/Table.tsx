@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Paginator from 'components/Paginator/Paginator';
 import TableHead from './TableHead/TableHead';
 import TableBody from './TableBody/TableBody';
@@ -13,6 +13,7 @@ const Table = ({ data }) => {
     tableData,
     PER_PAGE_COUNT
   );
+  const [sortedBy, setSortedBy] = useState(null);
 
   const onSortTable = ({ sortedBy, direction, type }) => {
     if (!sortedBy) {
@@ -24,12 +25,17 @@ const Table = ({ data }) => {
     }
   };
 
+  // make sure any edits are synced back to the local state
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
+
   return (
     <>
       <div className={styles.tableContainer}>
         <table className={styles.inventoryTable}>
-          <TableHead onSortTable={onSortTable} />
-          <TableBody data={pageData} />
+          <TableHead onSortTable={onSortTable} sortedBy={sortedBy} setSortedBy={setSortedBy} />
+          <TableBody data={pageData} sortedBy={sortedBy} />
         </table>
       </div>
       <Paginator

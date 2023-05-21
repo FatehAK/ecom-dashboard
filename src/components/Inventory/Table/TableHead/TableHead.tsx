@@ -2,8 +2,7 @@ import { useState } from 'react';
 import TableHeadCell from './TableHeadCell';
 import { SORT_DIRECTION } from '../config';
 
-const TableHead = ({ onSortTable }) => {
-  const [sortedBy, setSortedBy] = useState(null);
+const TableHead = ({ sortedBy, setSortedBy, onSortTable }) => {
   const [direction, setDirection] = useState(SORT_DIRECTION.UP);
 
   const onSortBy = (name, type) => {

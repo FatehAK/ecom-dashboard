@@ -1,10 +1,12 @@
 import TableBodyRow from './TableBodyRow';
 
-const TableBody = ({ data }) => {
+const TableBody = ({ data, sortedBy }) => {
+  const blockEdits = !!sortedBy;
+
   return (
     <tbody>
       {data.map(item => (
-        <TableBodyRow key={item.id} data={item} rowId={item.id} />
+        <TableBodyRow key={item.id} data={item} rowId={item.id} blockEdits={blockEdits} />
       ))}
     </tbody>
   );
