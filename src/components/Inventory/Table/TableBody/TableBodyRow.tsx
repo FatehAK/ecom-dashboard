@@ -2,12 +2,12 @@ import { useState } from 'react';
 import ChevronDownIcon from 'components/Icons/ChevronDown';
 import { useDispatch } from 'react-redux';
 import { updateInventory } from 'store/slices/inventorySlice';
-import TableCell from './TableCell';
+import TableBodyCell from './TableBodyCell';
 import { COLOR_LIST, COLOR_MAP, SIZE_LIST, SIZES_MAP } from 'constants/index';
-import { MAX_COLORS_TO_DISPLAY, MAX_SIZES_TO_DISPLAY, NESTED_ROW_PADDING } from './config';
-import styles from './TableRow.module.css';
+import { MAX_COLORS_TO_DISPLAY, MAX_SIZES_TO_DISPLAY, NESTED_ROW_PADDING } from '../config';
+import styles from './TableBodyRow.module.css';
 
-const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
+const TableBodyRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
   const dispatch = useDispatch();
   const [isExpanded, setExpanded] = useState(false);
 
@@ -70,7 +70,7 @@ const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
       return (
         <input
           name="title"
-          style={{ width: `${data.title.length * 0.79}ch`, minWidth: '8ch' }}
+          style={{ width: '35ch', minWidth: '8ch' }}
           {...getInputProps(cellProps, data.title)}
         />
       );
@@ -149,7 +149,7 @@ const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
   return (
     <>
       <tr onClick={() => setExpanded(prevExpanded => !prevExpanded)}>
-        <TableCell
+        <TableBodyCell
           className={styles.productTitle}
           style={{ paddingInlineStart: `${depth * NESTED_ROW_PADDING + 2}rem` }}
         >
@@ -168,8 +168,8 @@ const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
               {isColorRow && data.active && <span className={styles.activeTag}>Active</span>}
             </>
           )}
-        </TableCell>
-        <TableCell>
+        </TableBodyCell>
+        <TableBodyCell>
           {cellProps => (
             <input
               name="inventory"
@@ -177,8 +177,8 @@ const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
               {...getInputProps(cellProps, data.inventory)}
             />
           )}
-        </TableCell>
-        <TableCell>
+        </TableBodyCell>
+        <TableBodyCell>
           {cellProps => (
             <>
               <span>$</span>
@@ -189,8 +189,8 @@ const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
               />
             </>
           )}
-        </TableCell>
-        <TableCell className={styles.bold}>
+        </TableBodyCell>
+        <TableBodyCell className={styles.bold}>
           {cellProps => (
             <>
               <input
@@ -201,21 +201,12 @@ const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
               <span>%</span>
             </>
           )}
-        </TableCell>
-        <TableCell>
+        </TableBodyCell>
+        <TableBodyCell>
           <div className={styles.colorCircleWrap}>{renderColorShapes()}</div>
-        </TableCell>
-        <TableCell className={styles.nowrap}>{renderSizesText()}</TableCell>
-        <TableCell>
-          {cellProps => (
-            <input
-              name="inventory"
-              style={{ width: '5ch' }}
-              {...getInputProps(cellProps, data.inventory)}
-            />
-          )}
-        </TableCell>
-        <TableCell className={styles.nowrap}>
+        </TableBodyCell>
+        <TableBodyCell className={styles.nowrap}>{renderSizesText()}</TableBodyCell>
+        <TableBodyCell className={styles.nowrap}>
           {cellProps => (
             <input
               name="leadTime"
@@ -223,11 +214,11 @@ const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
               {...getInputProps(cellProps, data.leadTime)}
             />
           )}
-        </TableCell>
+        </TableBodyCell>
       </tr>
       {isExpanded &&
         childRows.map(data => (
-          <TableRow
+          <TableBodyRow
             key={data.name}
             data={data}
             rowId={`${rowId}_${data.name}`}
@@ -239,4 +230,4 @@ const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
   );
 };
 
-export default TableRow;
+export default TableBodyRow;

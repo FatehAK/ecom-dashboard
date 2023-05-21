@@ -1,0 +1,20 @@
+.headCellBtn {
+  cursor: pointer;
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.arrow {
+  transform: rotate(180deg);
+  display: inline-block;
+  transition: transform 0.1s;
+}
+
+.arrow[data-direction='DOWN'] {
+  transform: rotate(0deg);
+}

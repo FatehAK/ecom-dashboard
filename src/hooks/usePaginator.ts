@@ -15,7 +15,7 @@ const usePaginator = (data, perPage) => {
     setPage(p => p - 1);
   }, []);
 
-  const gotoPageAt = useCallback(idx => {
+  const goToPageAt = useCallback(idx => {
     setPage(idx);
   }, []);
 
@@ -24,7 +24,7 @@ const usePaginator = (data, perPage) => {
     currentPage: page,
     goToNextPage,
     goToPreviousPage,
-    gotoPageAt,
+    goToPageAt,
   };
 };
 

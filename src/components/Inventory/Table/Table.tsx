@@ -1,36 +1,35 @@
-import TableRow from './TableRow';
+import { useState } from 'react';
 import Paginator from 'components/Paginator/Paginator';
+import TableHead from './TableHead/TableHead';
+import TableBody from './TableBody/TableBody';
 import usePaginator from 'hooks/usePaginator';
+import { sortDataByDirection } from './tableUtils';
 import { PER_PAGE_COUNT } from './config';
 import styles from './Table.module.css';
 
 const Table = ({ data }) => {
-  const { pageData, currentPage, goToNextPage, goToPreviousPage, gotoPageAt } = usePaginator(
-    data,
+  const [tableData, setTableData] = useState(data);
+  const { pageData, currentPage, goToNextPage, goToPreviousPage, goToPageAt } = usePaginator(
+    tableData,
     PER_PAGE_COUNT
   );
+
+  const onSortTable = ({ sortedBy, direction, type }) => {
+    if (!sortedBy) {
+      // remove the sorting
+      setTableData(data);
+    } else {
+      const sortedData = sortDataByDirection([...data], sortedBy, direction, type);
+      setTableData(sortedData);
+    }
+  };
 
   return (
     <>
       <div className={styles.tableContainer}>
         <table className={styles.inventoryTable}>
-          <thead>
-            <tr>
-              <th>Product Title</th>
-              <th>Stock</th>
-              <th>WHS</th>
-              <th>Discount%</th>
-              <th>Color</th>
-              <th>Sizes</th>
-              <th>Inventory</th>
-              <th>Lead Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pageData.map(item => (
-              <TableRow key={item.id} data={item} rowId={item.id} />
-            ))}
-          </tbody>
+          <TableHead onSortTable={onSortTable} />
+          <TableBody data={pageData} />
         </table>
       </div>
       <Paginator
@@ -39,7 +38,7 @@ const Table = ({ data }) => {
         currentPage={currentPage}
         goToNextPage={goToNextPage}
         goToPreviousPage={goToPreviousPage}
-        gotoPageAt={gotoPageAt}
+        goToPageAt={goToPageAt}
       />
     </>
   );

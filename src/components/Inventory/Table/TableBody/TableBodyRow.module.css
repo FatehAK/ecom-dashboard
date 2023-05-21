@@ -52,6 +52,7 @@
 .cellInput {
   padding: 0;
   font-weight: inherit;
+  text-overflow: ellipsis;
   border: 1px solid transparent;
 }
 

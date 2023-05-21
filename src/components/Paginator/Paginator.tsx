@@ -2,7 +2,7 @@ import ChevronLeftIcon from 'components/Icons/ChevronLeft';
 import ChevronRightIcon from 'components/Icons/ChevronRight';
 import styles from './Paginator.module.css';
 
-const Paginator = ({ total, perPage, currentPage, goToNextPage, goToPreviousPage, gotoPageAt }) => {
+const Paginator = ({ total, perPage, currentPage, goToNextPage, goToPreviousPage, goToPageAt }) => {
   const shouldPaginate = total > perPage;
 
   const totalPageCount = Math.ceil(total / perPage);
@@ -29,7 +29,7 @@ const Paginator = ({ total, perPage, currentPage, goToNextPage, goToPreviousPage
               className={styles.pageNumber}
               title={`Goto Page ${i + 1}`}
               aria-label={`Goto Page ${i + 1}`}
-              onClick={() => gotoPageAt(i + 1)}
+              onClick={() => goToPageAt(i + 1)}
               style={{ borderColor: isActive ? 'var(--color-brand)' : 'var(--white)' }}
             >
               {i + 1}
