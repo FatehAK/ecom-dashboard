@@ -18,7 +18,6 @@
   position: sticky;
   z-index: 2;
   top: 0;
-  padding-inline: 2rem;
   font-weight: 400;
   background-color: var(--white);
 }

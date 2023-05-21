@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import ChevronDownIcon from 'components/Icons/ChevronDown';
+import { useDispatch } from 'react-redux';
+import { updateInventory } from 'store/slices/inventorySlice';
+import TableCell from './TableCell';
+import { COLOR_LIST, COLOR_MAP, SIZE_LIST, SIZES_MAP } from 'constants/index';
+import { MAX_COLORS_TO_DISPLAY, MAX_SIZES_TO_DISPLAY, NESTED_ROW_PADDING } from './config';
 import styles from './TableRow.module.css';
 
-const TableRow = ({ data, depth = 0 }) => {
+const TableRow = ({ data, rowId, rowSiblings, depth = 0 }) => {
+  const dispatch = useDispatch();
   const [isExpanded, setExpanded] = useState(false);
 
-  const isRootRow = data.hasOwnProperty('primary_variants');
-  const isColorRow = data.hasOwnProperty('secondary_variants');
+  const isRootRow = depth === 0;
+  const isColorRow = depth === 1;
 
   const getChildRows = () => {
     if (isRootRow) return data.primary_variants;
@@ -14,69 +20,40 @@ const TableRow = ({ data, depth = 0 }) => {
     return [];
   };
 
-  const getSizesText = () => {
+  const renderColorShapes = () => {
+    if (!isRootRow) return null;
+    // slice to limit the number of colors displayed in the table
+    const slicedColors = data.primary_variants.slice(0, MAX_COLORS_TO_DISPLAY);
+    const components = slicedColors.map(cur => (
+      <span
+        key={cur.name}
+        className={styles.colorCircle}
+        style={{ background: COLOR_MAP[cur.name] || '#e0e0e0' }}
+      />
+    ));
+
+    const remainingCount = data.primary_variants.length - MAX_COLORS_TO_DISPLAY;
+    if (remainingCount > 0) components.push(<span key={remainingCount}>+{remainingCount}</span>);
+    return components;
+  };
+
+  const renderSizesText = () => {
     if (isRootRow) return data.sizes;
     if (isColorRow) {
-      // sets a limit on number of sizes displayed
-      const limit = 3;
-      const sizesMap = {
-        Small: 'S',
-        Medium: 'M',
-        Large: 'L',
-        'Extra Large': 'XL',
-      };
-
-      const order = Object.keys(sizesMap);
       // ensure the sizes are in order and slice them by the limit
       const slicedSizes = [...data.secondary_variants]
-        .sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name))
-        .slice(0, limit);
+        .sort((a, b) => SIZE_LIST.indexOf(a.name) - SIZE_LIST.indexOf(b.name))
+        .slice(0, MAX_SIZES_TO_DISPLAY);
+      const sizesText = slicedSizes.map(cur => SIZES_MAP[cur.name]).join(', ');
 
-      const remainingItems = data.secondary_variants.length - limit;
-      const str = slicedSizes.reduce((acc, cur, idx) => {
-        if (idx !== slicedSizes.length - 1) {
-          acc += `${sizesMap[cur.name]}, `;
-        } else {
-          acc += `${sizesMap[cur.name]}`;
-        }
-        return acc;
-      }, '');
-
-      if (remainingItems > 0) return `${str} +${remainingItems}`;
-      return str;
+      const remainingCount = data.secondary_variants.length - MAX_SIZES_TO_DISPLAY;
+      if (remainingCount > 0) return `${sizesText} +${remainingCount}`;
+      return sizesText;
     }
     return null;
   };
 
-  const getColorCircles = () => {
-    if (!isRootRow) return null;
-
-    const limit = 2;
-    const colorsMap = {
-      Red: '#e5896a',
-      Green: '#29e577',
-      Blue: '#71c1e5',
-      Yellow: '#ffc200',
-    };
-
-    const remainingItems = data.primary_variants.length - limit;
-    const slicedColors = data.primary_variants.slice(0, limit);
-    const components = slicedColors.reduce((acc, cur) => {
-      acc.push(
-        <span
-          key={cur.name}
-          className={styles.colorCircle}
-          style={{ background: colorsMap[cur.name] || '#e0e0e0' }}
-        />
-      );
-      return acc;
-    }, []);
-
-    if (remainingItems > 0) components.push(<span key={remainingItems}>+{remainingItems}</span>);
-    return components;
-  };
-
-  const getVariantCount = () => {
+  const renderVariantCount = () => {
     if (isRootRow)
       return `${data.primary_variants.length} ${
         data.primary_variants.length > 1 ? 'colors' : 'color'
@@ -88,42 +65,176 @@ const TableRow = ({ data, depth = 0 }) => {
     return null;
   };
 
-  const childRows = getChildRows();
+  const renderProductTitle = cellProps => {
+    if (isRootRow) {
+      return (
+        <input
+          name="title"
+          style={{ width: `${data.title.length * 0.79}ch`, minWidth: '8ch' }}
+          {...getInputProps(cellProps, data.title)}
+        />
+      );
+    }
 
-  // padding for nested rows
-  const NESTED_ROW_PADDING = 2;
+    if (!cellProps.isEditing) return <span>{data.name}</span>;
+    // we prevent colors already in the table to be selected to avoid duplicates
+    const allOptions = isColorRow ? COLOR_LIST : SIZE_LIST;
+    const options = allOptions.filter(opt => !rowSiblings.some(o => o.name === opt));
+    // add back the current active color
+    options.unshift(data.name);
+    return (
+      <select
+        name="name"
+        defaultValue={data.name}
+        onChange={evt => {
+          handleUpdateInventory(evt.target.name, evt.target.value);
+          cellProps.cancelEditing();
+        }}
+        onBlur={() => cellProps.cancelEditing()}
+        onClick={evt => {
+          // prevent the collapse/expand from occuring in the parent
+          evt.stopPropagation();
+        }}
+        autoFocus
+      >
+        {options.map(opt => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const getInputProps = (cellProps, value) => {
+    return {
+      type: 'text',
+      readOnly: !cellProps.isEditing,
+      className: styles.cellInput,
+      ref: cellProps.ref,
+      defaultValue: value,
+      onBlur: evt => {
+        // reset back to old value since data isn't saved yet
+        if (evt.target.value !== value) evt.target.value = value;
+        cellProps.cancelEditing();
+      },
+      onClick: evt => {
+        // prevent the collapse/expand from triggering in the parent
+        evt.stopPropagation();
+      },
+      onKeyDown: evt => {
+        if (evt.key === 'Enter' && evt.target.value.trim().length) {
+          handleUpdateInventory(evt.target.name, evt.target.value);
+          cellProps.cancelEditing();
+        }
+      },
+    };
+  };
+
+  const handleUpdateInventory = (fieldToUpdate, value) => {
+    const [rootId, primaryVariantId, secondaryVariantId] = `${rowId}`.split('_');
+    const data = {
+      rootId: +rootId,
+      primaryVariantId,
+      secondaryVariantId,
+      fieldToUpdate,
+      value,
+    };
+    // update our store
+    dispatch(updateInventory(data));
+  };
+
+  const childRows = getChildRows();
 
   return (
     <>
       <tr onClick={() => setExpanded(prevExpanded => !prevExpanded)}>
-        <td
+        <TableCell
           className={styles.productTitle}
           style={{ paddingInlineStart: `${depth * NESTED_ROW_PADDING + 2}rem` }}
         >
-          <span>{data.title || data.name}</span>
-          <span className={styles.variantCount}>{getVariantCount()}</span>
-          {childRows.length > 0 && (
-            <span
-              className={styles.chevronDown}
-              style={{ transform: `rotate(${isExpanded ? '180' : '0'}deg)` }}
-            >
-              <ChevronDownIcon width={12} height={12} />
-            </span>
+          {cellProps => (
+            <>
+              {renderProductTitle(cellProps)}
+              <span className={styles.variantCount}>{renderVariantCount()}</span>
+              {childRows.length > 0 && (
+                <span
+                  className={styles.chevronDown}
+                  style={{ transform: `rotate(${isExpanded ? '180' : '0'}deg)` }}
+                >
+                  <ChevronDownIcon width={12} height={12} />
+                </span>
+              )}
+              {isColorRow && data.active && <span className={styles.activeTag}>Active</span>}
+            </>
           )}
-          {isColorRow && data.active && <span className={styles.activeTag}>Active</span>}
-        </td>
-        <td>{data.inventory}</td>
-        <td>${data.price}</td>
-        <td className={styles.bold}>{data.discountPercentage}%</td>
-        <td>
-          <div className={styles.colorCircleWrap}>{getColorCircles()}</div>
-        </td>
-        <td className={styles.nowrap}>{getSizesText()}</td>
-        <td>{data.inventory}</td>
-        <td className={styles.nowrap}>{data.leadTime}</td>
+        </TableCell>
+        <TableCell>
+          {cellProps => (
+            <input
+              name="inventory"
+              style={{ width: '5ch' }}
+              {...getInputProps(cellProps, data.inventory)}
+            />
+          )}
+        </TableCell>
+        <TableCell>
+          {cellProps => (
+            <>
+              <span>$</span>
+              <input
+                name="price"
+                style={{ width: '6ch' }}
+                {...getInputProps(cellProps, data.price)}
+              />
+            </>
+          )}
+        </TableCell>
+        <TableCell className={styles.bold}>
+          {cellProps => (
+            <>
+              <input
+                name="discountPercentage"
+                style={{ width: '3ch' }}
+                {...getInputProps(cellProps, data.discountPercentage)}
+              />
+              <span>%</span>
+            </>
+          )}
+        </TableCell>
+        <TableCell>
+          <div className={styles.colorCircleWrap}>{renderColorShapes()}</div>
+        </TableCell>
+        <TableCell className={styles.nowrap}>{renderSizesText()}</TableCell>
+        <TableCell>
+          {cellProps => (
+            <input
+              name="inventory"
+              style={{ width: '5ch' }}
+              {...getInputProps(cellProps, data.inventory)}
+            />
+          )}
+        </TableCell>
+        <TableCell className={styles.nowrap}>
+          {cellProps => (
+            <input
+              name="leadTime"
+              style={{ width: '7ch' }}
+              {...getInputProps(cellProps, data.leadTime)}
+            />
+          )}
+        </TableCell>
       </tr>
       {isExpanded &&
-        childRows.map(data => <TableRow key={data.name} data={data} depth={depth + 1} />)}
+        childRows.map(data => (
+          <TableRow
+            key={data.name}
+            data={data}
+            rowId={`${rowId}_${data.name}`}
+            rowSiblings={childRows}
+            depth={depth + 1}
+          />
+        ))}
     </>
   );
 };

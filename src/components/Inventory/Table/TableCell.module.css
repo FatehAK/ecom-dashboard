@@ -1,0 +1,21 @@
+.tableCellContent {
+  display: flex;
+  align-items: center;
+}
+
+.editBtn {
+  cursor: pointer;
+  display: flex;
+  gap: 0.1rem;
+  align-items: center;
+  width: 46px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-brand);
+  background: transparent;
+  border: 0;
+}
+
+.editPlaceholder {
+  width: 46px;
+}

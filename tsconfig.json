@@ -25,7 +25,7 @@
       "utils/*": ["./src/utils/*"],
       "constants/*": ["./src/constants/*"],
       "assets/*": ["./src/assets/*"],
-      "redux/*": ["src/store/*"],
+      "store/*": ["src/store/*"],
       "api/*": ["src/api/*"]
     }
   },

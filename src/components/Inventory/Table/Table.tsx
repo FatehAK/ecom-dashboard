@@ -19,7 +19,7 @@ const Table = ({ data }) => {
         </thead>
         <tbody>
           {data.map(item => (
-            <TableRow key={item.id} data={item} />
+            <TableRow key={item.id} data={item} rowId={item.id} />
           ))}
         </tbody>
       </table>

@@ -9,7 +9,7 @@ const PencilIcon = ({ width, height }) => {
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth=".8"
+      strokeWidth="1.2"
     >
       <path d="M1.75 11.25v3h3l9.5-9.5-3-3z" />
       <path d="M8.75 4.75l2.5 2.5" />

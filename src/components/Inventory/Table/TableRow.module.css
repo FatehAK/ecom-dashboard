@@ -1,5 +1,5 @@
 .bold {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .nowrap {
@@ -47,4 +47,19 @@
   color: var(--white);
   background-color: var(--lime-green);
   border-radius: 2rem;
+}
+
+.cellInput {
+  padding: 0;
+  font-weight: inherit;
+  border: 1px solid transparent;
+}
+
+.cellInput:read-only {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.cellInput:read-only:focus {
+  outline: none;
 }
