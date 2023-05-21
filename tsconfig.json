@@ -26,7 +26,8 @@
       "constants/*": ["./src/constants/*"],
       "assets/*": ["./src/assets/*"],
       "store/*": ["src/store/*"],
-      "api/*": ["src/api/*"]
+      "api/*": ["src/api/*"],
+      "hooks/*": ["src/hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

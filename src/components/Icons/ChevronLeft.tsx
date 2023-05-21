@@ -10,7 +10,7 @@ const ChevronLeftIcon = ({ width, height }) => {
       <path
         d="M15 4l-8 8 8 8"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
