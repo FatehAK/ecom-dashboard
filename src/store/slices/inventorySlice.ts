@@ -12,7 +12,7 @@ export interface InventoryState {
   isErrored: boolean;
 }
 
-const initialState: InventoryState = {
+export const initialState: InventoryState = {
   data: [],
   isFetching: false,
   isErrored: false,
